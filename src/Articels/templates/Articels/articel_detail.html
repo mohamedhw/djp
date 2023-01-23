@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="article-detail">
+  <div class="article">
+    <img src="{{object.thumb.url}}">
+    <h2>{{object.title}}</h2>
+    <p>{{object.body}}</p>
+    <p>{{object.date}}</p>
+    <p class="author">Added By {{object.author.username}}</p>
+  </div>
+</div>
+{% endblock %}

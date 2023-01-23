@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Pics List</h2>
+    <div class="row">
+      {% for instance in object_list %}
+      <div class="col-md-4 p-4">
+        <a class="article-2" href="{{instance.get_absolute_url}}">
+          <image src="{{instance.thumb.url}}" style="width:250px; height:250px"></image>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,259 @@
+body {
+    background-color: #0f121f;
+    background-image: url(/static/stars.png);
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+* {
+    font-family: Ubuntu;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: normal;
+    margin: 0;
+}
+
+a, a:hover, a:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo {
+    color:#00bda0
+}
+
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+div.wrapper > h1 {
+    text-align: center;
+    margin: 100px auto;
+    font-size: 2.4em
+}
+
+header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px 0;
+}
+
+nav {
+    justify-self: end;
+}
+
+nav li {
+    display: inline-block;
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+
+nav button {
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    border: 0;
+    font-size: 16px;
+}
+
+nav button:hover {
+    color: #00bda0
+}
+
+h2 {
+    text-align: center;
+    margin: 100px 0;
+    font-size: 2.4em;
+}
+
+.articles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 30px;
+}
+
+.article {
+    border: 1px solid #00dba0;
+    padding: 10px;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.article-2 {
+    padding: 10px;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.article .author {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    background-color: #00dba0;
+    padding: 10px;
+    color: #0f121f
+}
+
+.article-detail .article {
+    padding: 0;
+}
+
+.article-detail .article img {
+    width: 100%;
+}
+
+.article-detail .article h2 {
+    margin: 20px auto;
+    font-size: 2em;
+}
+
+.article-detail .article p {
+    text-align: center;
+}
+
+.site-form {
+    border: 1px solid #00bda0;
+    padding: 50px
+}
+
+.site-form input, .site-form label {
+    display: block;
+    margin: 20px 0;
+    padding: 10px;
+    font-size: .9em;
+}
+
+.site-form input[type=submit] {
+    background-color: #00dba0;
+    border: 0;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: bolder;
+    width: 90px;
+}
+
+.site-form input[type=submit]:hover {
+    color: #0f121f;
+    cursor: pointer;
+}
+
+.site_form {
+    border: 1px solid #00bda0;
+    padding: 50px
+}
+
+.site_form input, .site_form label {
+    display: block;
+    margin: 20px 0;
+    padding: 10px;
+    font-size: .9em;
+}
+
+.site_form input[type=submit] {
+    background-color: #00dba0;
+    border: 0;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: bolder;
+    width: 90px;
+}
+
+.site_form input[type=submit]:hover {
+    color: #0f121f;
+    cursor: pointer;
+}
+
+
+a.highlight {
+    border: 1px solid #00dba0;
+    padding: 10px;
+    border-radius: 4px;
+    color: #00dba0;
+}
+
+a.highlight:hover {
+    background-color: #00dba0;
+    color: #0f121f;
+}
+
+.helptext, .helptext ul {
+    margin: 0 auto 20px;
+    color: #bbb;
+    font-size: 14px;
+    display: block;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.errorlist li {
+    padding: 10px;
+    list-style-type: none;
+    border: 1px solid #FF5722;
+    margin: 10px 0;
+    color: #FF5722
+}
+
+
+.errorlist {
+    padding: 0;
+}
+
+
+
+.comments {
+    border: 1px solid #00dba0;
+    margin: 30px 10px;
+    padding: 20px 30px;
+}
+
+.comments input{
+    width: 90%;
+    height: auto;
+    display: block;
+    font-size: x-large;
+    margin-top: 20px
+}
+
+.comments p:last-of-type{
+    font-size: small;
+    direction: rtl;
+    color: #999;
+}
+
+
+.comments span{
+    font-size: larger;
+    color: #FFF;
+    margin: 5px
+}
+
+.comments button{
+    background: none;
+    color: #FFF;
+    border: 1px solid #00dba0;
+    cursor: pointer;
+    padding: 8px
+}
+
+
+.comments button:hover{
+    background-color: #00dba0;
+    color: #000
+}
+
+.search-span {
+    font-size: medium;
+    font-weight: bold;
+    color: #00bda0
+}
+
+
+.search-input {
+    background: none;
+    color:#00bda0;
+    border: none;
+}
