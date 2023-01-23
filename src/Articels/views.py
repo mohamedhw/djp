@@ -36,6 +36,7 @@ def articel_create(request):
 def search_view(request):
     query = request.GET.get('q')
     qs = Article.objects.search(query=query)
+    print(qs)
     context = {
         "qs": qs
     }
