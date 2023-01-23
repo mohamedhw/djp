@@ -1,5 +1,4 @@
-﻿
-{% load static %}
+﻿{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -12,26 +11,32 @@
   <body>
     <header class="wrapper row">
       <h1 class="col-md-4 logo"><a style="color: #00bda0" href="{% url 'articles:list' %}">DJP</a></h1>
-      <form method="GET" action="{% url 'articles:search' %}" class="col-md-4 mt-3">
+      <form method="GET" action="{% url 'articles:search' %}" class="col-md-3 mt-3">
         <input class="search-input" placeholder="Search" name="q">
       </form>
-      <nav class="col-md-4 mt-2">
-          <ul>
+      <nav class="col-md-5 p-4">
               {% if user.is_authenticated %}
-              <li>
+              <ul>
+                <li class="">
                   <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
                       {% csrf_token %}
                       <button type="submit">Logout</button>
                   </form>
-              </li>
-              <li>
-                  <a href="{% url 'articles:create' %}" class="highlight">Add pic</a>
-              </li>
-              {% else %}
-              <li><a href="{% url 'accounts:login' %}">Login</a></li>
-              <li><a href="{% url 'accounts:signup' %}">Signup</a></li>
-              {% endif %}
-          </ul>
+                </li>
+                <li>
+                  <a href="{% url 'accounts:profile' %}" class="highlight">Profile</a>
+                </li>
+                <li>
+                    <a href="{% url 'articles:create' %}" class="highlight">Add pic</a>
+                </li>
+            </ul>
+            {% else %}
+              <ul style="margin-left:186px">
+                <li class="ml-5"><a href="{% url 'accounts:login' %}">Login</a></li>
+                <li class="ml-5"><a href="{% url 'accounts:signup' %}">Signup</a></li>
+              </ul>
+            {% endif %}
+
       </nav>
     </header>
     <div class="wrapper">
