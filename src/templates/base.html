@@ -14,7 +14,7 @@
       <form method="GET" action="{% url 'articles:search' %}" class="col-md-3 mt-3">
         <input class="search-input" placeholder="Search" name="q">
       </form>
-      <nav class="col-md-5 p-4">
+      <nav class="col-md-5 p-3">
               {% if user.is_authenticated %}
               <ul>
                 <li class="">
@@ -31,10 +31,10 @@
                 </li>
             </ul>
             {% else %}
-              <ul style="margin-left:186px">
-                <li class="ml-5"><a href="{% url 'accounts:login' %}">Login</a></li>
-                <li class="ml-5"><a href="{% url 'accounts:signup' %}">Signup</a></li>
-              </ul>
+            <ul style="margin-left:134px">
+              <li class="ml-5"><a class="btn btn-outline-success btn-s" href="{% url 'accounts:login' %}">Login</a></li>
+              <li class="ml-5"><a class="btn btn-outline-success btn-s" href="{% url 'accounts:signup' %}">Signup</a></li>
+            </ul>
             {% endif %}
 
       </nav>

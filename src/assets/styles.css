@@ -251,15 +251,6 @@ a.highlight:hover {
     color: #00bda0
 }
 
-.my-button {
-    background-color: #00dba0;
-    border: 0;
-    border-radius: 4px;
-    color: #FFF;
-    font-weight: bolder;
-    width: 90px;
-}
-
 .search-input {
     background: none;
     color:#00bda0;
@@ -272,4 +263,16 @@ a.highlight:hover {
 
 .btn-d:hover {
     color:#fff !important
+}
+
+.btn-s {
+    color:#198754 !important
+}
+
+.btn-s:hover {
+    color:#fff !important
+}
+
+.ahr a{
+    color:#198754
 }
