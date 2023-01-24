@@ -2,17 +2,22 @@ from django.shortcuts import render, redirect
 from .models import Article
 from .forms import CreateArticle
 from django.contrib.auth.decorators import login_required
-from django.views.generic import DeleteView, UpdateView
+from django.views.generic import DeleteView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-def articel_list(request, *args, **kwargs):
-    queryset = Article.objects.all().order_by('date')
-    context = {
-        'object_list': queryset
-    }
+class ArticelList(ListView):
+    model= Article
+    template_name="Articels/articel_list.html"
+    paginate_by=9
 
-    return render(request, 'Articels/articel_list.html', context)
+# def articel_list(request, *args, **kwargs):
+#     queryset = Article.objects.all().order_by('date')
+#     context = {
+#         'object_list': queryset
+#     }
+
+#     return render(request, 'Articels/articel_list.html', context)
 
 def articel_detail(request, id, *args, **kwargs):
     obj = Article.objects.get(id=id)
