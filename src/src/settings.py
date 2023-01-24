@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     'accounts',
     'Articels',
     
+    "crispy_bootstrap5",
     "bootstrap4",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -135,5 +137,8 @@ LOGIN_URL = 'login'
 # Media files
 
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = (BASE_DIR / "media")
+
+# CrispyForms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

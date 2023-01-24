@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="my-border">
+    <div class="col-lg-4 mt-5 log-in-form">
+        <form method="post" enctype="multipart/form-data" action=""> {% csrf_token %}
+            <div class="form-control-lg" id="inputEmail3">
+                {{form|crispy}}
+            </div>
+            <input class="btn btn-outline-success m-3" type="submit" value="Update"/>
+        </form>
+    </div>
+</div>
+{% endblock content %}

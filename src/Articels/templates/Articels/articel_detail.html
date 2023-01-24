@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% if object.author == request.user %}
+  <div class="mb-1">
+    <a type="button" href="{% url 'articles:delete' object.pk %}" class="btn btn-outline-danger m-2 btn-d">Delete</a>
+    <a type="button" href="{% url 'articles:update' object.pk %}" class="btn btn-outline-success">Update</a>
+  </div>
+{% endif %}
 <div class="article-detail">
   <div class="article">
     <img src="{{object.thumb.url}}">

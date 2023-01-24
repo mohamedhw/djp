@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <image class="m-5" style="width:300px; height:300px" src="{{ user.profile.image.url }}"></image>
@@ -6,8 +7,8 @@
 
 <form class="site_form" method="post">
     {% csrf_token %}
-    {{ u_form }}
-    {{ p_form }}
+    {{ u_form|crispy }}
+    {{ p_form|crispy }}
     <input class="mt-5" type="submit" value="Update"/>
 </form>
 {% endblock %}

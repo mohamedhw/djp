@@ -251,9 +251,25 @@ a.highlight:hover {
     color: #00bda0
 }
 
+.my-button {
+    background-color: #00dba0;
+    border: 0;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: bolder;
+    width: 90px;
+}
 
 .search-input {
     background: none;
     color:#00bda0;
     border: none;
+}
+
+.btn-d {
+    color:#dc3545 !important
+}
+
+.btn-d:hover {
+    color:#fff !important
 }
