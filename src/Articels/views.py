@@ -4,6 +4,9 @@ from .forms import CreateArticle
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+
 
 
 class ArticelList(ListView):
@@ -67,11 +70,65 @@ class ArticlUpdateView(LoginRequiredMixin, UpdateView):
             return True
         return False
 
-def search_view(request):
-    query = request.GET.get('q')
-    qs = Article.objects.search(query=query)
-    print(qs)
-    context = {
-        "qs": qs
-    }
-    return render(request, "Articels/search.html", context)
+# def search_view(request):
+#     query = request.GET.get('q')
+#     qs = Article.objects.search(query=query)
+
+#     # paginate
+#     page = request.GET.get('page', 1)
+#     qs_paginator = Paginator(qs, PIC_BY_PAGE)
+#     print("the qs_paginator ====", qs_paginator)
+#     try:
+#         qs=qs_paginator.page(page)
+#     except EmptyPage:
+#         qs=qs_paginator.page(qs_paginator.num_pages)
+#     except PageNotAnInteger:
+#         qs=qs_paginator.page(PIC_BY_PAGE)
+#     print(qs)
+
+#     context = {
+#         "qs": qs,
+#     }
+#     return render(request, "Articels/search.html", context)
+
+# class FilterList(ListView):
+#     filterset_class=None
+#     def get_queryset(self, *args, **kwargs):
+#         query = self.request.GET.get('q')
+#         qs1 = Article.objects.search(query=query)
+#         self.filterset_class=qs1
+#         print(self.filterset_class)
+#         return self.filterset_class
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # Pass the filterset to the template - it provides the form.
+#         context['filterset'] = self.filterset_class
+#         return context
+    
+
+class SearchView(ListView):
+    model= Article
+    template_name="Articels/search.html"
+    paginate_by=6
+    
+    def get_queryset(self, *args, **kwargs):
+        query = self.request.GET.get('q')
+        qs = Article.objects.search(query=query)
+        self.filterset_class=qs
+        print(self.filterset_class)
+        return self.filterset_class
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        # Pass the filterset to the template - it provides the form.
+        # context['object_list'] = qs
+        context['query']=query
+        return context
+    # def get(self, request, *args, **kwargs):
+    #     query = self.request.GET.get('q')
+    #     qs = Article.objects.search(query=query)
+    #     context={"qs": qs}
+    #     return render(request, "Articels/search.html", context)
