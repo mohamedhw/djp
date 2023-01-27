@@ -5,6 +5,10 @@
 <image class="m-5" style="width:300px; height:300px" src="{{ user.profile.image.url }}"></image>
 <p class="m-5 mt-1" style="font-size:30px; font-weight:bold">{{ user.username }}</p>
 
+<hr/>
+    <button class="btn btn-outline-success btn-lg mx-5 px-5"><a href="{% url 'articles:saved' %}">Saved</a></button>
+<hr/>
+<br>
 <form class="site_form" method="post">
     {% csrf_token %}
     {{ u_form|crispy }}

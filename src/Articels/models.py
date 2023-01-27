@@ -19,7 +19,8 @@ class Article(models.Model):
     body = models.TextField()
     thumb = models.ImageField(default='default.png', blank=True, upload_to='media')
     date = models.DateTimeField(default=timezone.now())
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    saved_pic = models.ManyToManyField(User, blank=True, related_name="save_pic")
 
 
     objects = ArticleManager()

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http.response import JsonResponse
 
 
 
@@ -105,7 +106,28 @@ class ArticlUpdateView(LoginRequiredMixin, UpdateView):
 #         # Pass the filterset to the template - it provides the form.
 #         context['filterset'] = self.filterset_class
 #         return context
-    
+
+@login_required
+def saved_view(request):
+    user = request.user
+    pics = user.save_pic.all()
+    context={
+        "pics": pics,
+    }
+    return render(request, "Articels/saved_pic.html", context)
+
+@login_required
+def saved_button(request, pk):
+    if request.POST.get('action') == 'post':
+        data = {}
+        pics = Article.objects.get(pk=pk)
+        if request.user in pics.saved_pic.all():
+            pics.saved_pic.remove(request.user)
+        else:
+            pics.saved_pic.add(request.user)
+            
+    return JsonResponse({"data": data})
+
 
 class SearchView(ListView):
     model= Article
