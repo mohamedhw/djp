@@ -1,15 +1,16 @@
-from django.forms import ModelForm
+from django import forms
 from .models import Profile
 from django.contrib.auth.models import User
 
 
-class UserUpdateForm(ModelForm):
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
     class Meta:
         model = User
-        fields = ['username']
+        fields = ['username', 'email']
 
 
-class UserProfileForm(ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']

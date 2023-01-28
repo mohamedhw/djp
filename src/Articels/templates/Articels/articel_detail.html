@@ -13,7 +13,9 @@
     <p>{{object.body}}</p>
     <p>{{object.date}}</p>
     <p class="author">Added By {{object.author.username}}</p>
-    <button class="btn btn-outline-success px-5 " id="save-button">Save</button>
+    {% if user.is_authenticated %}
+      <button class="btn btn-outline-success px-5 " id="save-button">Save</button>
+    {% endif %}
   </div>
 </div>
 <script>

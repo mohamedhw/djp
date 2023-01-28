@@ -6,10 +6,12 @@
 <p class="m-5 mt-1" style="font-size:30px; font-weight:bold">{{ user.username }}</p>
 
 <hr/>
-    <button class="btn btn-outline-success btn-lg mx-5 px-5"><a href="{% url 'articles:saved' %}">Saved</a></button>
+    <a href="{% url 'articles:saved' %}">
+        <button class="btn btn-outline-success btn-lg mx-5 px-5">Saved</button>
+    </a>
 <hr/>
 <br>
-<form class="site_form" method="post">
+<form class="site_form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ u_form|crispy }}
     {{ p_form|crispy }}
