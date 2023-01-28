@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Article
+from django.contrib.auth.models import User
 from .forms import CreateArticle
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView, ListView
@@ -107,14 +108,22 @@ class ArticlUpdateView(LoginRequiredMixin, UpdateView):
 #         context['filterset'] = self.filterset_class
 #         return context
 
-@login_required
-def saved_view(request):
-    user = request.user
-    pics = user.save_pic.all()
-    context={
-        "pics": pics,
-    }
-    return render(request, "Articels/saved_pic.html", context)
+class SavedView(ListView):
+    model = Article
+    template_name= "Articels/saved_pic.html"
+    context_object_name="pics"
+    paginate_by= 3
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.save_pic.all()
+# @login_required
+# def saved_view(request):
+
+#     context={
+#         "pics": pics,
+#     }
+#     return render(request, "Articels/saved_pic.html", context)
 
 @login_required
 def saved_button(request, pk):
@@ -128,6 +137,15 @@ def saved_button(request, pk):
             
     return JsonResponse({"data": data})
 
+class Posted_by(ListView):
+    model=Article
+    template_name = "Articels/posted_by.html"
+    context_object_name= "pics"
+    paginate_by=9
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.kwargs.get('username'))
+        return Article.objects.filter(author=user).order_by('-date') 
 
 class SearchView(ListView):
     model= Article

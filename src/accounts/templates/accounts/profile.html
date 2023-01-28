@@ -2,12 +2,23 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<image class="m-5" style="width:300px; height:300px" src="{{ user.profile.image.url }}"></image>
-<p class="m-5 mt-1" style="font-size:30px; font-weight:bold">{{ user.username }}</p>
+    <div class="row">
+        <div class="col-md-5">
+            <image class="m-5" style="width:300px; height:300px" src="{{ user.profile.image.url }}"></image>
+        </div>
+        <div class="col-md-7 pt-5">
+            <p class="m-3" style="font-size:30px; font-weight:bold; color:#00bda0">name: <span style="color:#fff">{{ user.username }}</span></p>
+            <p class="m-3" style="font-size:30px; font-weight:bold; color:#00bda0">email: <span style="color:#fff">{{ user.email }}</span></p>
+            <!-- <p class="m-5 mt-1" style="font-size:30px; font-weight:bold">pics: {{ user.count }}</p> -->
+        </div>
+    </div>
 
 <hr/>
     <a href="{% url 'articles:saved' %}">
         <button class="btn btn-outline-success btn-lg mx-5 px-5">Saved</button>
+    </a>
+    <a href="{% url 'articles:posted_by' user.username %}">
+        <button class="btn btn-outline-success btn-lg mx-5 px-5">My Pics</button>
     </a>
 <hr/>
 <br>

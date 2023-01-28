@@ -8,11 +8,15 @@
 {% endif %}
 <div class="article-detail">
   <div class="article">
-    <img src="{{object.thumb.url}}">
+    <a href="{{ object.thumb.url }}">
+      <img src="{{object.thumb.url}}">
+    </a>
     <h2>{{object.title}}</h2>
     <p>{{object.body}}</p>
     <p>{{object.date}}</p>
-    <p class="author">Added By {{object.author.username}}</p>
+    <a href="{% url 'articles:posted_by' object.author.username %}">
+      <p class="author">Added By {{object.author.username}}</p>
+    </a>
     {% if user.is_authenticated %}
       <button class="btn btn-outline-success px-5 " id="save-button">Save</button>
     {% endif %}

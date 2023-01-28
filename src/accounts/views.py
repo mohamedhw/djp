@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, UserProfileForm
 from django.contrib import messages
+from Articels.models import Article
+from django.contrib.auth.models import User
 # Create your views here.
 
 def signup_view(request):
@@ -49,6 +51,7 @@ def logout_view(request):
 
 @login_required
 def profile(request):
+
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = UserProfileForm(request.POST,
@@ -66,7 +69,7 @@ def profile(request):
         p_form = UserProfileForm(instance=request.user)
     context = {
         'u_form': u_form,   
-        'p_form': p_form
+        'p_form': p_form,
     }
     
     return render(request, 'accounts/profile.html', context)
