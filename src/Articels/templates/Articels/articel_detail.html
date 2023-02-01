@@ -24,7 +24,11 @@
       <p class="author">Added By {{object.author.username}}</p>
     </a>
     {% if user.is_authenticated %}
-      <button class="btn btn-outline-success px-5 " id="save-button">Save</button>
+      {% if request.user in object.saved_pic.all %}
+        <button class="btn btn-success px-5" id="save-button" style="color:#fff">Saved</button>
+      {% else %}
+        <button class="btn btn-outline-success px-5" id="save-button" style="color:#fff">Save</button>
+      {% endif %}
     {% endif %}
   </div>
 </div>
@@ -43,9 +47,9 @@
                 action: 'post'
               },
               success: function(response) {
-                  if(request.user in pic.saved_post.all()){
-                      save_button.classList.add("save-button")
-                  }
+                $('#save-button').html('Saved');
+                $('#save-button').toggleClass('btn-success', 'btn-outline-success');
+                // $('#save-button').addClass('btn-success');
               },
               error: function (xhr, errmsg, err){
 

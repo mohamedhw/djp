@@ -37,22 +37,28 @@ def articel_detail(request, id, *args, **kwargs):
 @login_required(login_url='#')
 def articel_create(request):
     form = CreateArticle()
-    h_form = HashTagForm()
     if request.method == 'POST':
         form = CreateArticle(request.POST, request.FILES)
-        h_form = HashTagForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
-
+            
             return redirect("articles:list")
     context = {
         'form': form,
-        'h_form': h_form
     }
     return render(request, 'Articels/articel_create.html', context)
 
+
+# @login_required
+# def hashtag_create(request):
+#     form = HashTagForm()
+#     if request.method == 'POST':
+#         form = HashTagForm(request.POST)
+#         if form.is_valid():
+#             instance = form.save(commit=False)
+#             instance.
 
 class ArticalDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
