@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Article
+from .models import Article, Hashtag
 from django.contrib.auth.models import User
-from .forms import CreateArticle
+from .forms import CreateArticle, HashTagForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -26,23 +26,30 @@ class ArticelList(ListView):
 
 def articel_detail(request, id, *args, **kwargs):
     obj = Article.objects.get(id=id)
+    # tags = Hashtag.objects.filter(article_pk=obj)
     context = {
-        'object': obj
+        'object': obj,
+        # 'tags': tags
     }
     return render(request, 'Articels/articel_detail.html', context)
+
 
 @login_required(login_url='#')
 def articel_create(request):
     form = CreateArticle()
+    h_form = HashTagForm()
     if request.method == 'POST':
         form = CreateArticle(request.POST, request.FILES)
+        h_form = HashTagForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
+
             return redirect("articles:list")
     context = {
-        'form': form
+        'form': form,
+        'h_form': h_form
     }
     return render(request, 'Articels/articel_create.html', context)
 
@@ -172,3 +179,13 @@ class SearchView(ListView):
     #     qs = Article.objects.search(query=query)
     #     context={"qs": qs}
     #     return render(request, "Articels/search.html", context)
+
+
+def hashtag_view(request, tag_slug):
+    tag = get_object_or_404(Hashtag, tag_slug=tag_slug)
+    articles = Article.objects.filter(tags=tag)
+    context = {
+        'articles': articles,
+        'tag': tag
+    }
+    return render(request, "Articels/filter_tag.html", context)

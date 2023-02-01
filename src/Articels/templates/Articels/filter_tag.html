@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1># {{ tag.title }}</h1>
+    <div class="row">
+      {% for instance in articles %}
+      <div class="col-md-4 p-4">
+        <a class="article-2" href="{{instance.get_absolute_url}}">
+          <image src="{{instance.thumb.url}}" style="width:250px; height:250px"></image>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-lag-12 mt-4" style="margin-left:16px">
+      {% if is_paginated %}
+    
+          {% if page_obj.has_previous %}
+              <a class="btn btn-outline-success m-1 btn-s" href="?page=1">First</a>
+              <a class="btn btn-outline-success m-1 btn-s" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+    
+          {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                  <a class="btn btn-success m-1" href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <a class="btn btn-outline-success m-1 btn-s" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+          {% endfor %}
+    
+          {% if page_obj.has_next %}
+              <a class="btn btn-outline-success m-1 btn-s" href="?page={{ page_obj.next_page_number }}">Next</a>
+              <a class="btn btn-outline-success m-1 btn-s" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          {% endif %}
+    
+      {% endif %}
+    </div>
+{% endblock %}
+

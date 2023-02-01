@@ -6,6 +6,7 @@
         <form class="site-form" action='.' method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{form|crispy}}
+            {{h_form|crispy}}
             <input type="submit" value="Create"/>
         </form>
     </div>

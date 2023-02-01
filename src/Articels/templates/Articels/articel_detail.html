@@ -14,6 +14,12 @@
     <h2>{{object.title}}</h2>
     <p>{{object.body}}</p>
     <p>{{object.date}}</p>
+    <div class="position-absolute top-90 start-50 translate-middle">
+      {% for tag in object.tags.all %}
+        <span class="btn btn-success px-3 p-0">#{{ tag.title }}</span>
+      {% endfor %}
+    </div>
+
     <a href="{% url 'articles:posted_by' object.author.username %}">
       <p class="author">Added By {{object.author.username}}</p>
     </a>

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ArticelList, SearchView, Posted_by, SavedView, saved_button, articel_detail, articel_create, ArticalDeleteView, ArticlUpdateView
+from .views import ArticelList, SearchView, Posted_by, SavedView, hashtag_view, saved_button, articel_detail, articel_create, ArticalDeleteView, ArticlUpdateView
 
 app_name='articles'
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path("<int:pk>/delete/", ArticalDeleteView.as_view(), name="delete"),
     path("<int:pk>/update/", ArticlUpdateView.as_view(), name="update"),
     path("<int:pk>/save/", saved_button, name="save"),
-    path("posted/<str:username>/", Posted_by.as_view(), name="posted_by")
+    path("posted/<str:username>/", Posted_by.as_view(), name="posted_by"),
+    path('tag/<slug:tag_slug>/', hashtag_view, name='tags')
 ]
