@@ -25,6 +25,9 @@ class Hashtag(models.Model):
     # time            = models.TimeField(auto_now_add=True)
     # user_pk         = models.IntegerField()
 
+    def get_absolute_url_tag(self):
+        return reverse("articles:tags", kwargs={"tag_slug": self.tag_slug})
+
     def save(self, *args, **kwargs):
         if not self.tag_slug:
             self.tag_slug = slugify(self.title)

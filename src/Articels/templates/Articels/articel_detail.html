@@ -16,7 +16,7 @@
     <p>{{object.date}}</p>
     <div class="position-absolute top-90 start-50 translate-middle">
       {% for tag in object.tags.all %}
-        <span class="btn btn-success px-3 p-0">#{{ tag.title }}</span>
+        <a href="{{ tag.get_absolute_url_tag }}"><span class="btn btn-success px-3 p-0">#{{ tag.title }}</span></a>
       {% endfor %}
     </div>
 
