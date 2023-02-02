@@ -253,8 +253,13 @@ a.highlight:hover {
 
 .search-input {
     background: none;
-    color:#00bda0;
-    border: none;
+    color:#fff;
+    border: 0;
+}
+
+.search-input:focus {
+    outline:none!important;
+    border-bottom: 0.10mm solid #00dba0;
 }
 
 .btn-d {

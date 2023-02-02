@@ -37,16 +37,26 @@ def articel_detail(request, id, *args, **kwargs):
 @login_required(login_url='#')
 def articel_create(request):
     form = CreateArticle()
+    form_h = HashTagForm()
+
     if request.method == 'POST':
+        form_h = HashTagForm(request.POST)
         form = CreateArticle(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid() and form_h.is_valid():
+            insatnce_h = form_h.save()
+            insatnce_h.save()
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
+            instance.tags.add(insatnce_h.id)
+            instance.save()
+            print(instance.id)
             
-            return redirect("articles:list")
+            return redirect("articles:detail", instance.pk)
+
     context = {
         'form': form,
+        'form_h': form_h
     }
     return render(request, 'Articels/articel_create.html', context)
 
@@ -69,6 +79,10 @@ class ArticalDeleteView(LoginRequiredMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+def hash_update_view(request):
+    
+    pass
 
 class ArticlUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
