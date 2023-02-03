@@ -6,6 +6,6 @@
     <form class="site_form" action="/account/signup/" method="post">
         {% csrf_token %}
         {{form|crispy}}
-        <input type="submit" value="Signup" />
+        <input class="btn btn-outline-success btn-s px-4 mt-5 m-1" type="submit" value="Signup" />
     </form>
 {% endblock %}

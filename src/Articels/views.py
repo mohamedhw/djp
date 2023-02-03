@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .forms import CreateArticle, HashTagForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DeleteView, UpdateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import JsonResponse
 
@@ -34,7 +34,7 @@ def articel_detail(request, id, *args, **kwargs):
     return render(request, 'Articels/articel_detail.html', context)
 
 
-@login_required(login_url='#')
+@login_required()
 def articel_create(request):
     form = CreateArticle()
     form_h = HashTagForm()
@@ -70,7 +70,7 @@ def articel_create(request):
 #             instance = form.save(commit=False)
 #             instance.
 
-class ArticalDeleteView(LoginRequiredMixin, DeleteView):
+class ArticalDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Article
     success_url ="/"
 
@@ -84,7 +84,7 @@ def hash_update_view(request):
     
     pass
 
-class ArticlUpdateView(LoginRequiredMixin, UpdateView):
+class ArticlUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Article
     fields = ["title", "body"]
     template_name = "Articels/update.html"
@@ -177,7 +177,7 @@ class Posted_by(ListView):
 class SearchView(ListView):
     model= Article
     template_name="Articels/search.html"
-    paginate_by=6
+    paginate_by=9
     
     def get_queryset(self, *args, **kwargs):
         query = self.request.GET.get('q')
@@ -209,3 +209,15 @@ def hashtag_view(request, tag_slug):
         'tag': tag
     }
     return render(request, "Articels/filter_tag.html", context)
+
+def rm_tag(request, tag_slug, **kwargs):
+    my_p = kwargs.get('pk')
+    article = Article.objects.get(pk=my_p)
+    tag = get_object_or_404(Hashtag, tag_slug=tag_slug)
+    if request.user == article.author:
+        article.tags.remove(tag)
+    else:
+        return redirect("articles:update", article.pk)
+    return redirect("articles:detail", article.pk)
+
+        

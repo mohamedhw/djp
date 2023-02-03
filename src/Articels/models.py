@@ -15,7 +15,7 @@ class ArticleManager(models.Manager):
 
 
 class Hashtag(models.Model):
-    title   = models.CharField(max_length=3000, blank=True, null=True)
+    tag   = models.CharField(max_length=3000, blank=True, null=True)
     tag_slug    = models.SlugField(null=False, unique=True)
     # hashtagcount    = models.IntegerField(null=True, blank=True)
     #          = models.ManyToManyField(Article)
@@ -30,11 +30,11 @@ class Hashtag(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.tag_slug:
-            self.tag_slug = slugify(self.title)
+            self.tag_slug = slugify(self.tag)
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        return self.tag
 
 
 class Article(models.Model):

@@ -10,4 +10,4 @@ class CreateArticle(forms.ModelForm):
 class HashTagForm(forms.ModelForm):
     class Meta:
         model = models.Hashtag
-        fields = ['title']
+        fields = ['tag']

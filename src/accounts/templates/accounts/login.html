@@ -8,8 +8,9 @@
     {{form|crispy}}
     {% if request.GET.next %}
         <input type="hidden" name="next" value="{{request.GET.next}}" />
-        <input type="submit" value="Login" />
+        <input class="btn btn-outline-success btn-s px-4 mt-5 m-1" type="submit" value="Login" />
+    {% else %}
+        <input class="btn btn-outline-success btn-s px-4 mt-5 m-1" type="submit" value="Login" />
     {% endif %}
-    <input type="submit" value="Login" />
 </form>
 {% endblock %}

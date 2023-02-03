@@ -10,6 +10,18 @@
     <title>Articles</title>
   </head>
   <body>
+    <div class="">
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> -->
+          </div>
+          {% endfor %}
+      {% endif %}
+    </div>
     <header class="wrapper row">
       <h1 class="col-md-4 logo"><a style="color: #00bda0" href="{% url 'articles:list' %}">DJP</a></h1>
       <form method="GET" action="{% url 'articles:search' %}" class="col-md-3 mt-3">
