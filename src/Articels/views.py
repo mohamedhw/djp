@@ -220,4 +220,31 @@ def rm_tag(request, tag_slug, **kwargs):
         return redirect("articles:update", article.pk)
     return redirect("articles:detail", article.pk)
 
-        
+@login_required
+def add_tags(request, pk):
+    article = Article.objects.get(pk=pk)
+    hashtag = Hashtag.objects.all()
+    # print("Her The:", hashtag.tag_slug)
+    form = HashTagForm()
+    if request.method == 'POST':
+        form = HashTagForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            article.tags.add(instance)
+    #         if instance.tag in hashtag.tag:
+    #             article.tags.add(instance)
+    #         else:
+    #             instance.save()
+    #             article.tags.add(instance.id)
+    #     else:
+    #         form = HashTagForm()
+    # else:
+    #     form = HashTagForm()
+            
+    context = {
+        'form': form,
+        'article': article
+    }
+    return render(request, "Articels/add_tag.html", context)
+
