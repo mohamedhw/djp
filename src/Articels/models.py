@@ -17,13 +17,6 @@ class ArticleManager(models.Manager):
 class Hashtag(models.Model):
     tag   = models.CharField(max_length=3000, blank=True, null=True)
     tag_slug    = models.SlugField(null=False, unique=True)
-    # hashtagcount    = models.IntegerField(null=True, blank=True)
-    #          = models.ManyToManyField(Article)
-
-    # atetime         = models.DateTimeField(auto_now_add=True)
-    # date            = models.DateField(auto_now_add=True)
-    # time            = models.TimeField(auto_now_add=True)
-    # user_pk         = models.IntegerField()
 
     def get_absolute_url_tag(self):
         return reverse("articles:tags", kwargs={"tag_slug": self.tag_slug})
@@ -34,7 +27,7 @@ class Hashtag(models.Model):
         return super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.tag
+        return self.tag_slug
 
 
 class Article(models.Model):

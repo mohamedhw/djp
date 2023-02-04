@@ -7,6 +7,7 @@ from django.views.generic import DeleteView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import JsonResponse
+from django.contrib import messages
 
 
 
@@ -38,21 +39,35 @@ def articel_detail(request, id, *args, **kwargs):
 def articel_create(request):
     form = CreateArticle()
     form_h = HashTagForm()
-
+    hashtag = Hashtag.objects.all()
+    tags = []
+    for i in hashtag:
+        tags.append(i.tag)
     if request.method == 'POST':
         form_h = HashTagForm(request.POST)
         form = CreateArticle(request.POST, request.FILES)
         if form.is_valid() and form_h.is_valid():
-            insatnce_h = form_h.save()
-            insatnce_h.save()
+            instance_h = form_h.save(commit=False)
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
-            instance.tags.add(insatnce_h.id)
-            instance.save()
-            print(instance.id)
-            
+            # check if the tag in tags
+            if instance_h.tag in tags:
+                tag = hashtag.get(tag=instance_h.tag)
+                instance.tags.add(tag)
+            # if tag is not in tags
+            else:
+                instance_h.save()
+                instance.tags.add(instance_h.id)
+
+            messages.info(request, f"post [{instance.title}] was created successfully!")
             return redirect("articles:detail", instance.pk)
+        else:
+            form = CreateArticle()
+            form_h = HashTagForm()
+    else:
+        form = CreateArticle()
+        form_h = HashTagForm()
 
     context = {
         'form': form,
@@ -224,24 +239,35 @@ def rm_tag(request, tag_slug, **kwargs):
 def add_tags(request, pk):
     article = Article.objects.get(pk=pk)
     hashtag = Hashtag.objects.all()
-    # print("Her The:", hashtag.tag_slug)
+    tags = []
+    for i in hashtag:
+        tags.append(i.tag)
     form = HashTagForm()
     if request.method == 'POST':
         form = HashTagForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.save()
-            article.tags.add(instance)
-    #         if instance.tag in hashtag.tag:
-    #             article.tags.add(instance)
-    #         else:
-    #             instance.save()
-    #             article.tags.add(instance.id)
-    #     else:
-    #         form = HashTagForm()
-    # else:
-    #     form = HashTagForm()
-            
+            # check if the tag in tags
+            if instance.tag in tags:
+                tag = hashtag.get(tag=instance.tag)
+                # check if tag in article tags
+                if tag in article.tags.all():
+                    form = HashTagForm()
+                    messages.info(request, f"Hashtag [#{instance.tag}] already exist!")
+                # if tag is not in article tags
+                else:
+                    article.tags.add(tag1)
+                    messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
+            # if tag is not in tags
+            else:
+                instance.save()
+                article.tags.add(instance.id)
+                messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
+        else:
+            form = HashTagForm()
+    else:
+        form = HashTagForm()
+                        
     context = {
         'form': form,
         'article': article
