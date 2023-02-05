@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>[{{ pics.count }}] Pics by {{ user.username }}</h2>
+    <h2>[{{ pics.count }}] Pics by {{ view.kwargs.username }}</h2>
     <div class="row">
     {% for instance in pics %}
     <div class="col-md-4 p-4">
