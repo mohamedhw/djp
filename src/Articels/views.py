@@ -47,21 +47,25 @@ def articel_create(request):
         form_h = HashTagForm(request.POST)
         form = CreateArticle(request.POST, request.FILES)
         if form.is_valid() and form_h.is_valid():
-            instance_h = form_h.save(commit=False)
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
-            # check if the tag in tags
-            if instance_h.tag in tags:
-                tag = hashtag.get(tag=instance_h.tag)
-                instance.tags.add(tag)
-            # if tag is not in tags
+            if not form_h.data['tag']:
+                return redirect("articles:detail", instance.pk)
+                # handel create the tag
             else:
-                instance_h.save()
-                instance.tags.add(instance_h.id)
+                instance_h = form_h.save(commit=False)
+                # check if the tag in tags
+                if instance_h.tag in tags:
+                    tag = hashtag.get(tag=instance_h.tag)
+                    instance.tags.add(tag)
+                # if tag is not in tags
+                else:
+                    instance_h.save()
+                    instance.tags.add(instance_h.id)
 
-            messages.info(request, f"post [{instance.title}] was created successfully!")
-            return redirect("articles:detail", instance.pk)
+                messages.info(request, f"post [{instance.title}] was created successfully!")
+                return redirect("articles:detail", instance.pk)
         else:
             form = CreateArticle()
             form_h = HashTagForm()
@@ -256,7 +260,7 @@ def add_tags(request, pk):
                     messages.info(request, f"Hashtag [#{instance.tag}] already exist!")
                 # if tag is not in article tags
                 else:
-                    article.tags.add(tag1)
+                    article.tags.add(tag)
                     messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
             # if tag is not in tags
             else:
