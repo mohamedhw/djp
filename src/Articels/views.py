@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http.response import JsonResponse
 from django.contrib import messages
+import re
 
 
 
@@ -201,9 +202,14 @@ class SearchView(ListView):
     
     def get_queryset(self, *args, **kwargs):
         query = self.request.GET.get('q')
+        query2 = re.search(r'#', query)
+        
+        if query2:
+            query = query.replace('#', '')
+        else:
+            query = self.request.GET.get('q')
         qs = Article.objects.search(query=query)
         self.filterset_class=qs
-        print(self.filterset_class)
         return self.filterset_class
 
 

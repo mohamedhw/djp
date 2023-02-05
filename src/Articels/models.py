@@ -10,7 +10,7 @@ class ArticleManager(models.Manager):
     def search(self, query=None):
         if query is None or query=="":
             return self.get_queryset().none()
-        lookups = Q(title__icontains=query) | Q(body__icontains=query)
+        lookups = Q(title__icontains=query) | Q(body__icontains=query) | Q(tags__tag__icontains=query)
         return self.get_queryset().filter(lookups)
 
 
