@@ -13,7 +13,8 @@
 
             <hr>
             {{form|crispy}}
-            <input class="btn btn-outline-success btn-s px-4 mt-5 m-1" type="submit" value="Create"/>
+            <input class="btn btn-outline-success btn-s px-5 mt-5 m-1" style="display:inline-block" type="submit" value="Create"/>
+            <a href="{% url 'articles:detail' article.pk %}" class="btn btn-outline-success btn-s p-2 px-5 mt-5 m-1" type="submit">Back</a>
         </form>
     </div>
 {% endblock %}

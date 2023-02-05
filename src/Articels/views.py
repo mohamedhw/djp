@@ -50,9 +50,10 @@ def articel_create(request):
             instance = form.save(commit=False)
             instance.author = request.user
             instance.save()
+            
             if not form_h.data['tag']:
                 return redirect("articles:detail", instance.pk)
-                # handel create the tag
+            # handel create the tag
             else:
                 instance_h = form_h.save(commit=False)
                 # check if the tag in tags
@@ -235,6 +236,7 @@ def rm_tag(request, tag_slug, **kwargs):
     tag = get_object_or_404(Hashtag, tag_slug=tag_slug)
     if request.user == article.author:
         article.tags.remove(tag)
+        return redirect("articles:update", article.pk)
     else:
         return redirect("articles:update", article.pk)
     return redirect("articles:detail", article.pk)
@@ -250,23 +252,27 @@ def add_tags(request, pk):
     if request.method == 'POST':
         form = HashTagForm(request.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            # check if the tag in tags
-            if instance.tag in tags:
-                tag = hashtag.get(tag=instance.tag)
-                # check if tag in article tags
-                if tag in article.tags.all():
-                    form = HashTagForm()
-                    messages.info(request, f"Hashtag [#{instance.tag}] already exist!")
-                # if tag is not in article tags
-                else:
-                    article.tags.add(tag)
-                    messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
-            # if tag is not in tags
+            # if not form_h.data['tag']:
+            if form.data['tag'] == "" or form.data['tag'] is None:
+                pass
             else:
-                instance.save()
-                article.tags.add(instance.id)
-                messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
+                instance = form.save(commit=False)
+                # check if the tag in tags
+                if instance.tag in tags:
+                    tag = hashtag.get(tag=instance.tag)
+                    # check if tag in article tags
+                    if tag in article.tags.all():
+                        form = HashTagForm()
+                        messages.info(request, f"Hashtag [#{instance.tag}] already exist!")
+                    # if tag is not in article tags
+                    else:
+                        article.tags.add(tag)
+                        messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
+                # if tag is not in tags
+                else:
+                    instance.save()
+                    article.tags.add(instance.id)
+                    messages.info(request, f"Hashtag [#{instance.tag}] added to your post!")
         else:
             form = HashTagForm()
     else:
